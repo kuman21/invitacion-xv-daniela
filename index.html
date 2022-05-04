@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Invitación de XV años</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cookie&family=Lora&family=Roboto&family=Genos&display=swap" rel="stylesheet">
+
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body>
+    <header class="relative inline-block">
+        <!--<div class="h-full w-full top-0 left-0 absolute bg-blue-400 bg-opacity-25"></div>-->
+        <img class="w-auto object-cover object-center" src="./img/dani_fondo.jpg" alt="Daniela">
+        <div class="absolute inset-x-0 bottom-0 py-2 px-1 bg-blue-400 bg-opacity-40 text-white"> <!-- bg-blue-400 bg-opacity-50 -->
+            <h1 class="font-lora
+                text-3xl
+                text-center
+                sm:text-4xl 
+                md:text-5xl 
+                lg:text-6xl 
+                leading-snug
+                font-extrabold
+                mt-2"
+            >
+                Daniela Gitse
+            </h1>
+            <h2 class="font-genos
+                text-6xl
+                text-center
+                sm:text-4xl 
+                md:text-5xl 
+                lg:text-6xl 
+                leading-snug
+                font-extrabold
+                mt-2"
+            >
+                Mis XV años
+            </h2>
+
+            <div class="grid grid-cols-4 mt-1 md:max-w-6xl md:mx-auto">
+                <div class="flex flex-col items-center justify-center">
+                    <h3 id="days" class="text-3xl font-extrabold"></h3>
+                    <span class="font-lora text-sm">Día (s)</span>
+                </div>
+    
+                <div class="flex flex-col items-center justify-center">
+                    <h3 id="hours" class="text-3xl font-extrabold"></h3>
+                    <span class="font-lora text-sm">Hrs</span>
+                </div>
+    
+                <div class="flex flex-col items-center justify-center">
+                    <h3 id="minutes" class="text-3xl font-extrabold"></h3>
+                    <span class="font-lora text-sm">Min</span>
+                </div>
+    
+                <div class="flex flex-col items-center justify-center">
+                    <h3 id="seconds" class="text-3xl font-extrabold"></h3>
+                    <span class="font-lora text-sm">Seg</span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <section class="my-2">
+        <h3 class="text-3xl text-uppercase font-lora font-extrabold text-center">Dónde & Cuándo</h3>
+
+        <div class="mt-4 p-6 m-4 flex flex-col space-y-4 bg-gray-100 rounded-md">
+            <h2 class="text-2xl font-bold text-center uppercase">Ceremonia Religiosa</h2>
+            <p class="font-lora text-lg font-semibold text-center text-blue-400">Capilla De San Jose Obrero</p>
+            <p class="text-base text-gray-700"><span class="text-black font-bold">Cuándo:</span> 16 de julio de 2022 18:00 hrs.</p>
+            <p class="text-base text-gray-700"><span class="text-black font-bold">Dirección:</span> Calle El Salvador, San José Obrero, Uruapan, Mich.</p>
+
+            <a class="w-full px-3 py-2 bg-blue-400 rounded-md text-white text-center" href="https://goo.gl/maps/g8P55CVgZPJXG87u9" target="_blank">Ver Mapa</a>
+        </div>
+    </section>
+
+    <section class="my-2">
+        <div class="mt-4 p-6 m-4 flex flex-col space-y-4 bg-gray-100 rounded-md">
+            <h2 class="text-2xl font-bold text-center uppercase">Recepción</h2>
+            <p class="font-lora text-lg font-semibold text-center text-blue-400">Salón de eventos</p>
+            <p class="text-base text-gray-700"><span class="text-black font-bold">Cuándo:</span> 16 de julio de 2022 19:00 hrs.</p>
+            <p class="text-base text-gray-700"><span class="text-black font-bold">Dirección:</span> Agora, Uruapan, Mich.</p>
+
+            <a class="w-full px-3 py-2 bg-blue-400 rounded-md text-white text-center" href="https://goo.gl/maps/g8P55CVgZPJXG87u9" target="_blank">Ver Mapa</a>
+        </div>
+    </section>
+        
+    <footer class="h-auto p-4">
+        <p class="font-lora text-xs text-center">Hoy das un paso muy importante en tu vida, dejas atrás la niñez y empiezas una etapa en la que te espera mucha felicidad y éxitos</p>
+    </footer>
+    
+    <script>        
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        'sans': 'Roboto, Arial, sans-serif',
+                        'lora': 'Lora, serif',
+                        'cookie': 'Cookie, cursive',
+                        'genos': 'Genos, sans-serif',
+                    }
+                }
+            }
+        }
+
+        const DATE_TARGET = new Date('07/16/2022 6:00 PM');
+
+        // DOM for render
+        const SPAN_DAYS = document.querySelector('h3#days');
+        const SPAN_HOURS = document.querySelector('h3#hours');
+        const SPAN_MINUTES = document.querySelector('h3#minutes');
+        const SPAN_SECONDS = document.querySelector('h3#seconds');
+
+        // Milliseconds for the calculations
+        const MILLISECONDS_OF_A_SECOND = 1000;
+        const MILLISECONDS_OF_A_MINUTE = MILLISECONDS_OF_A_SECOND * 60;
+        const MILLISECONDS_OF_A_HOUR = MILLISECONDS_OF_A_MINUTE * 60;
+        const MILLISECONDS_OF_A_DAY = MILLISECONDS_OF_A_HOUR * 24;
+
+        function updateCountdown() {
+            // Calcs
+            const NOW = new Date()
+            const DURATION = DATE_TARGET - NOW;
+            const REMAINING_DAYS = Math.floor(DURATION / MILLISECONDS_OF_A_DAY);
+            const REMAINING_HOURS = Math.floor((DURATION % MILLISECONDS_OF_A_DAY) / MILLISECONDS_OF_A_HOUR);
+            const REMAINING_MINUTES = Math.floor((DURATION % MILLISECONDS_OF_A_HOUR) / MILLISECONDS_OF_A_MINUTE);
+            const REMAINING_SECONDS = Math.floor((DURATION % MILLISECONDS_OF_A_MINUTE) / MILLISECONDS_OF_A_SECOND);
+
+            // Render
+            SPAN_DAYS.textContent = REMAINING_DAYS;
+            SPAN_HOURS.textContent = REMAINING_HOURS;
+            SPAN_MINUTES.textContent = REMAINING_MINUTES;
+            SPAN_SECONDS.textContent = REMAINING_SECONDS;
+        }
+
+        updateCountdown();
+
+        setInterval(updateCountdown, MILLISECONDS_OF_A_SECOND);
+    </script>
+</body>
+</html>
